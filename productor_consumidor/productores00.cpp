@@ -1,4 +1,3 @@
-
 #include<stdio.h>
 #include<pthread.h>
 #include<stdlib.h>
@@ -80,6 +79,7 @@ void *productor(void *arg)
         pthread_mutex_lock(&mutex);
 
         while (cantidad == TAM_BUFFER) {
+            printf("Productor-%d esperando: buffer lleno\n", arg2);
             pthread_cond_wait(&hayEspacio, &mutex);
         }
 
@@ -116,6 +116,7 @@ void *consumidor(void *arg)
         pthread_mutex_lock(&mutex);
 
         while (cantidad == 0 && productoresTerminados < NUM_PRODUCTORES) {
+            printf("Consumidor-%d esperando: buffer vacio\n", arg2);
             pthread_cond_wait(&hayDatos, &mutex);
         }
 
